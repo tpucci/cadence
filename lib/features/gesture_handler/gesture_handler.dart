@@ -42,6 +42,7 @@ class GestureHandler extends StatelessWidget {
         onPointerSignal: (details) {
           if (details is PointerScrollEvent) {
             if (details.scrollDelta.dx == 0 &&
+                // FIXME: When pinching, dx equals 0 and dy is a float. But this way of detecting a pinch smells bad.
                 details.scrollDelta.dy % 1 != 0) {
               _camera.zoom(details.scrollDelta.dy, details.position);
             } else {
