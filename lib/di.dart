@@ -1,4 +1,5 @@
 import 'package:app/features/camera/stores/camera_store.dart';
+import 'package:app/features/issues/stores/issues_store.dart';
 import 'package:get_it/get_it.dart';
 
 /// **Setup the application DI.**
@@ -18,4 +19,5 @@ void setupDi({bool clear = false}) {
   }
   GetIt getIt = GetIt.instance;
   getIt.registerSingleton<Camera>(CameraStore());
+  getIt.registerSingleton<IssuesStore>(MobxIssuesStore());
 }
