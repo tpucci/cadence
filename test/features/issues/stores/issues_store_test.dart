@@ -1,5 +1,4 @@
 import 'package:app/di.dart';
-import 'package:app/features/issues/stores/issue_store.dart';
 import 'package:app/features/issues/stores/issues_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -15,13 +14,13 @@ void main() {
 
     test('it stores some issues', () {
       // Arrange
-      Issue issue = IssueStore(offset: const Offset(2, 3));
+      Offset offset = const Offset(2, 3);
 
       // Act
-      issuesStore.add(issue);
+      issuesStore.create(offset: offset);
 
       // Assert
-      expect(issuesStore.issues, contains(issue));
+      expect(issuesStore.issues.length, 1);
     });
   });
 }

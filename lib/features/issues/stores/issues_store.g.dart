@@ -29,11 +29,11 @@ mixin _$MobxIssuesStore on _MobxIssuesStore, Store {
       ActionController(name: '_MobxIssuesStore', context: context);
 
   @override
-  void add(Issue issue) {
+  void create({required Offset offset}) {
     final _$actionInfo = _$_MobxIssuesStoreActionController.startAction(
-        name: '_MobxIssuesStore.add');
+        name: '_MobxIssuesStore.create');
     try {
-      return super.add(issue);
+      return super.create(offset: offset);
     } finally {
       _$_MobxIssuesStoreActionController.endAction(_$actionInfo);
     }
