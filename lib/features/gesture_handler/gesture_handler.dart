@@ -1,4 +1,5 @@
 import 'package:app/features/camera/stores/camera_store.dart';
+import 'package:app/features/gesture_handler/stores/pointer_store.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -31,6 +32,7 @@ class GestureHandler extends StatelessWidget {
   final List<Widget> children;
 
   final _camera = GetIt.I.get<Camera>();
+  final _pointer = GetIt.I.get<Pointer>();
 
   final _transform = ValueNotifier<Matrix4>(Matrix4.identity());
 
@@ -49,6 +51,20 @@ class GestureHandler extends StatelessWidget {
               _camera.pan(details.scrollDelta);
             }
           }
+        },
+        onPointerDown: (event) {
+          _pointer.nextState(PointerState(
+              offset: event.position, position: PointerPosition.down));
+        },
+        onPointerUp: (event) {
+          _pointer.nextState(PointerState(
+              offset: event.position, position: PointerPosition.up));
+        },
+        onPointerHover: (event) {
+          _pointer.setOffset(event.position);
+        },
+        onPointerMove: (event) {
+          _pointer.setOffset(event.position);
         },
         child: SizedBox.expand(
             child: AnimatedBuilder(
