@@ -10,25 +10,35 @@ class IssueCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Observer(
-      builder: (_) => Transform.translate(
-          offset: issue.offset,
-          child: SizedBox.fromSize(
-            size: const Size(200, 100),
-            child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                color: background.shade100,
-                elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text("Hello World",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(color: Colors.grey.shade900)),
-                )),
-          )),
+      builder: (_) => Positioned(
+        left: issue.offset.dx,
+        top: issue.offset.dy,
+        child: SizedBox(
+          width: 200,
+          child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+              color: background.shade100,
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                        hintText: "Enter issue title",
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.grey.shade700)),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: Colors.grey.shade900)),
+              )),
+        ),
+      ),
     );
   }
 }

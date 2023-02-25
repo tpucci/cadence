@@ -1,5 +1,6 @@
 import 'package:app/features/camera/stores/camera_store.dart';
 import 'package:app/features/gesture_handler/stores/pointer_store.dart';
+import 'package:app/features/gesture_handler/hit_test_permissive_stack.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -40,7 +41,7 @@ class GestureHandler extends StatelessWidget {
   Widget build(BuildContext context) {
     InteractiveViewer.builder;
     return Listener(
-        behavior: HitTestBehavior.opaque,
+        behavior: HitTestBehavior.translucent,
         onPointerSignal: (details) {
           if (details is PointerScrollEvent) {
             if (details.scrollDelta.dx == 0 &&
@@ -71,10 +72,9 @@ class GestureHandler extends StatelessWidget {
           animation: _transform,
           builder: (context, child) =>
               Transform(transform: _transform.value, child: child),
-          child: RepaintBoundary(
-            child: Stack(
-              children: children,
-            ),
+          child: HitTestPermissiveStack(
+            clipBehavior: Clip.none,
+            children: children,
           ),
         )));
   }
