@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:app/features/camera/stores/camera_store.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 part 'pointer_store.g.dart';
@@ -14,8 +16,8 @@ class PointerState {
 }
 
 abstract class Pointer {
-  abstract Offset offset;
-  abstract Stream<PointerState> stateStream;
+  abstract final Offset offset;
+  abstract final Stream<PointerState> stateStream;
   void setOffset(Offset offset);
   void nextState(PointerState state);
 }
@@ -29,9 +31,10 @@ abstract class _PointerStore with Store implements Pointer {
         ObservableStream(_stateStreamController.stream).asBroadcastStream();
   }
 
-  @override
+  final _camera = GetIt.I.get<Camera>();
+
   @observable
-  Offset offset = Offset.zero;
+  Offset _offset = Offset.zero;
 
   final _stateStreamController = StreamController<PointerState>();
 
@@ -39,9 +42,13 @@ abstract class _PointerStore with Store implements Pointer {
   late Stream<PointerState> stateStream;
 
   @override
+  @computed
+  Offset get offset => (_offset - _camera.offset) / _camera.scale;
+
+  @override
   @action
   void setOffset(Offset offset) {
-    this.offset = offset;
+    _offset = offset;
   }
 
   @override

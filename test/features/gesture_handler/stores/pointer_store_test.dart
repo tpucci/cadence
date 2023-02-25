@@ -1,14 +1,17 @@
 import 'package:app/di.dart';
+import 'package:app/features/camera/stores/camera_store.dart';
 import 'package:app/features/gesture_handler/stores/pointer_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
 void main() {
   late Pointer pointer;
+  late Camera camera;
 
   setUp(() {
     setupDi(clear: true);
     pointer = GetIt.I.get<Pointer>();
+    camera = GetIt.I.get<Camera>();
   });
 
   group('PointerStore', () {
@@ -39,6 +42,20 @@ void main() {
       // Act
       pointer.nextState(downPointerState);
       pointer.nextState(upPointerState);
+    });
+
+    test('it stores the pointer offset in the camera scene', () {
+      // Arrange
+      const panOffset = Offset(6, 8);
+      const pointerOffset = Offset(4, 5);
+
+      // Act
+      pointer.setOffset(pointerOffset);
+      camera.zoom(200, Offset.zero);
+      camera.pan(panOffset);
+
+      // Assert
+      expect(pointer.offset, (pointerOffset + panOffset) / camera.scale);
     });
   });
 }
