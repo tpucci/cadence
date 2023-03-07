@@ -16,7 +16,7 @@ void main() {
 
     test('it moves the issue', () {
       // Arrange
-      final issue = IssueStore(offset: Offset.zero);
+      final issue = IssueStore();
       const expectedOffset = Offset(10, 12);
 
       // Act
@@ -24,6 +24,18 @@ void main() {
 
       // Assert
       expect(issue.offset, expectedOffset);
+    });
+
+    test('it renames the issue', () {
+      // Arrange
+      final issue = IssueStore();
+      const title = "A new title";
+
+      // Act
+      issue.rename(title);
+
+      // Assert
+      expect(issue.title, title);
     });
   });
 }

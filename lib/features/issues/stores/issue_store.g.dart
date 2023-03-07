@@ -24,6 +24,21 @@ mixin _$IssueStore on _IssueStore, Store {
     });
   }
 
+  late final _$titleAtom = Atom(name: '_IssueStore.title', context: context);
+
+  @override
+  String get title {
+    _$titleAtom.reportRead();
+    return super.title;
+  }
+
+  @override
+  set title(String value) {
+    _$titleAtom.reportWrite(value, super.title, () {
+      super.title = value;
+    });
+  }
+
   late final _$_IssueStoreActionController =
       ActionController(name: '_IssueStore', context: context);
 
@@ -39,9 +54,21 @@ mixin _$IssueStore on _IssueStore, Store {
   }
 
   @override
+  void rename(String title) {
+    final _$actionInfo =
+        _$_IssueStoreActionController.startAction(name: '_IssueStore.rename');
+    try {
+      return super.rename(title);
+    } finally {
+      _$_IssueStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-offset: ${offset}
+offset: ${offset},
+title: ${title}
     ''';
   }
 }

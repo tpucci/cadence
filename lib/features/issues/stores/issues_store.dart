@@ -5,7 +5,7 @@ import 'package:mobx/mobx.dart';
 part 'issues_store.g.dart';
 
 abstract class IssuesStore {
-  abstract List<Issue> issues;
+  abstract final List<Issue> issues;
   void create({required Offset offset});
 }
 
@@ -15,7 +15,7 @@ class MobxIssuesStore = _MobxIssuesStore with _$MobxIssuesStore;
 abstract class _MobxIssuesStore with Store implements IssuesStore {
   @override
   @observable
-  var issues = [];
+  List<Issue> issues = ObservableList<Issue>();
 
   @override
   @action
