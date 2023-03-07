@@ -27,11 +27,15 @@ class IssueCard extends StatelessWidget {
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: InputDecoration(
-                        hintText: "Enter issue title",
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: Colors.grey.shade700)),
+                      hintText: "Enter issue title",
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: Colors.grey.shade700),
+                      border: InputBorder.none,
+                    ),
+                    textAlignVertical: TextAlignVertical.top,
+                    cursorColor: secondary.shade600,
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
