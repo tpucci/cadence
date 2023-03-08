@@ -14,6 +14,7 @@ abstract class Issue {
 class IssueStore = _IssueStore with _$IssueStore;
 
 abstract class _IssueStore with Store implements Issue {
+  // FIXME: Dart thinks the following are not used. But they are.
   _IssueStore({this.offset = Offset.zero, this.title = ""});
 
   @override
