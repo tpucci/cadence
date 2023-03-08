@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'ui/home/screen.dart';
 
 void main() {
-  setupDi();
+  setupDi(demo: true);
   runApp(const MyApp());
 }
 

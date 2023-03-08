@@ -15,13 +15,17 @@ import 'package:get_it/get_it.dart';
 ///    });
 /// ```
 ///
-void setupDi({bool clear = false}) {
+void setupDi({bool clear = false, bool demo = false}) {
   if (clear) {
     GetIt.instance.reset();
   }
   GetIt getIt = GetIt.instance;
+
   getIt.registerSingleton<Camera>(CameraStore());
   getIt.registerSingleton<IssuesStore>(MobxIssuesStore());
-  getIt.registerSingleton(DemoFixtures());
   getIt.registerSingleton<Pointer>(PointerStore());
+
+  if (demo) {
+    getIt.registerSingleton(DemoFixtures());
+  }
 }
