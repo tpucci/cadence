@@ -62,5 +62,19 @@ void main() {
       // Assert
       expect(camera.scale, 4);
     });
+
+    test("it zooms by a factor", () {
+      // Act
+      camera.zoom(0, const Offset(0, 0), factor: 2);
+
+      // Assert
+      expect(camera.scale, 2);
+
+      // Act
+      camera.zoom(0, const Offset(0, 0), factor: 10000000);
+
+      // Assert
+      expect(camera.scale, 4);
+    });
   });
 }

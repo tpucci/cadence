@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:app/features/camera/stores/camera_store.dart';
 import 'package:app/features/gesture_handler/stores/pointer_store.dart';
 import 'package:app/features/gesture_handler/hit_test_permissive_stack.dart';
@@ -6,8 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart' as mobx;
 
-class GestureHandler extends StatelessWidget {
-  GestureHandler({super.key, required this.children}) {
+class GestureHandler extends StatefulWidget {
+  const GestureHandler({super.key, required this.children});
+
+  final List<Widget> children;
+
+  @override
+  State<GestureHandler> createState() => _GestureHandlerState();
+}
+
+class _GestureHandlerState extends State<GestureHandler> {
+  _GestureHandlerState() {
     mobx.reaction((_) => {_camera.offset, _camera.scale}, (_) {
       _transform.value = Matrix4(
         _camera.scale,
@@ -30,16 +40,16 @@ class GestureHandler extends StatelessWidget {
     }, fireImmediately: true);
   }
 
-  final List<Widget> children;
-
   final _camera = GetIt.I.get<Camera>();
+
   final _pointer = GetIt.I.get<Pointer>();
 
   final _transform = ValueNotifier<Matrix4>(Matrix4.identity());
 
+  double? _scaleStart; // Scale value at start of scaling gesture.
+
   @override
   Widget build(BuildContext context) {
-    InteractiveViewer.builder;
     return Listener(
         behavior: HitTestBehavior.translucent,
         onPointerSignal: (details) {
@@ -52,6 +62,17 @@ class GestureHandler extends StatelessWidget {
               _camera.pan(details.scrollDelta);
             }
           }
+        },
+        onPointerPanZoomStart: (_) {
+          _scaleStart = _camera.scale;
+        },
+        onPointerPanZoomUpdate: (details) {
+          _camera.pan(-details.localPanDelta);
+
+          // Handle scale
+          _scaleStart ??= details.scale;
+          _camera.zoom(0, details.position,
+              factor: _scaleStart! * details.scale);
         },
         onPointerDown: (event) {
           _pointer.nextState(PointerState(
@@ -74,7 +95,7 @@ class GestureHandler extends StatelessWidget {
               Transform(transform: _transform.value, child: child),
           child: HitTestPermissiveStack(
             clipBehavior: Clip.none,
-            children: children,
+            children: widget.children,
           ),
         )));
   }
