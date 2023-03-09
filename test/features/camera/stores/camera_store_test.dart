@@ -34,7 +34,7 @@ void main() {
 
     test('zoom correctly', () {
       // Act
-      camera.zoom(100, Offset.zero);
+      camera.zoom(fromOffset: Offset.zero, scaleDelta: 100);
 
       // Assert
       expect(camera.scale, 0.3);
@@ -43,7 +43,7 @@ void main() {
 
     test('zoom correctly from any offset', () {
       // Act
-      camera.zoom(100, const Offset(5, 10));
+      camera.zoom(fromOffset: const Offset(5, 10), scaleDelta: 100);
 
       // Assert
       expect(camera.scale, 0.3);
@@ -52,12 +52,12 @@ void main() {
 
     test('zoom is clamped', () {
       // Act
-      camera.zoom(100000, const Offset(0, 0));
+      camera.zoom(fromOffset: const Offset(0, 0), scaleDelta: 100000);
 
       // Assert
       expect(camera.scale, 0.3);
       // Act
-      camera.zoom(-100000, const Offset(0, 0));
+      camera.zoom(fromOffset: const Offset(0, 0), scaleDelta: -100000);
 
       // Assert
       expect(camera.scale, 4);
@@ -65,13 +65,13 @@ void main() {
 
     test("it zooms by a factor", () {
       // Act
-      camera.zoom(0, const Offset(0, 0), factor: 2);
+      camera.zoom(fromOffset: const Offset(0, 0), factor: 2);
 
       // Assert
       expect(camera.scale, 2);
 
       // Act
-      camera.zoom(0, const Offset(0, 0), factor: 10000000);
+      camera.zoom(fromOffset: const Offset(0, 0), factor: 10000000);
 
       // Assert
       expect(camera.scale, 4);

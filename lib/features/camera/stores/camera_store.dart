@@ -7,7 +7,7 @@ abstract class Camera {
   abstract Offset offset;
   abstract double scale;
   void pan(Offset scrollDelta);
-  void zoom(double scaleDelta, Offset fromOffset, {double? factor});
+  void zoom({required Offset fromOffset, double factor, double scaleDelta});
 }
 
 // ignore: library_private_types_in_public_api
@@ -34,12 +34,13 @@ abstract class _CameraStore with Store implements Camera {
 
   @action
   @override
-  void zoom(double scaleDelta, Offset from, {double? factor}) {
+  void zoom(
+      {required Offset fromOffset, double? factor, double scaleDelta = 0}) {
     final newScale =
         ((factor != null) ? factor : (scale - scaleDelta * _zoomSpeed))
             .clamp(_minScale, _maxScale)
             .toDouble();
-    offset = (offset - from) * newScale / scale + from;
+    offset = (offset - fromOffset) * newScale / scale + fromOffset;
     scale = newScale;
   }
 }

@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:app/features/camera/stores/camera_store.dart';
 import 'package:app/features/gesture_handler/stores/pointer_store.dart';
 import 'package:app/features/gesture_handler/hit_test_permissive_stack.dart';
@@ -57,7 +56,9 @@ class _GestureHandlerState extends State<GestureHandler> {
             if (details.scrollDelta.dx == 0 &&
                 // FIXME: When pinching, dx equals 0 and dy is a float. But this way of detecting a pinch smells bad.
                 details.scrollDelta.dy % 1 != 0) {
-              _camera.zoom(details.scrollDelta.dy, details.position);
+              _camera.zoom(
+                  fromOffset: details.position,
+                  scaleDelta: details.scrollDelta.dy);
             } else {
               _camera.pan(details.scrollDelta);
             }
@@ -71,7 +72,8 @@ class _GestureHandlerState extends State<GestureHandler> {
 
           // Handle scale
           _scaleStart ??= details.scale;
-          _camera.zoom(0, details.position,
+          _camera.zoom(
+              fromOffset: details.position,
               factor: _scaleStart! * details.scale);
         },
         onPointerDown: (event) {

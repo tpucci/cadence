@@ -51,7 +51,7 @@ void main() {
 
       // Act
       pointer.setOffset(pointerOffset);
-      camera.zoom(200, Offset.zero);
+      camera.zoom(fromOffset: Offset.zero);
       camera.pan(panOffset);
 
       // Assert

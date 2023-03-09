@@ -54,11 +54,13 @@ mixin _$CameraStore on _CameraStore, Store {
   }
 
   @override
-  void zoom(double scaleDelta, Offset from, {double? factor}) {
+  void zoom(
+      {required Offset fromOffset, double? factor, double scaleDelta = 0}) {
     final _$actionInfo =
         _$_CameraStoreActionController.startAction(name: '_CameraStore.zoom');
     try {
-      return super.zoom(scaleDelta, from, factor: factor);
+      return super
+          .zoom(fromOffset: fromOffset, factor: factor, scaleDelta: scaleDelta);
     } finally {
       _$_CameraStoreActionController.endAction(_$actionInfo);
     }
