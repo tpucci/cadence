@@ -18,11 +18,21 @@ class IssueCard extends StatelessWidget {
                 width: 200,
                 child: Card(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6.0),
+                    side: issue.selected
+                        ? BorderSide(
+                            color: secondary.shade500,
+                            width: 4,
+                          )
+                        : BorderSide.none,
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
                   color: background.shade100,
                   elevation: 5,
-                  child: Padding(
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(8.0),
+                    hoverColor: background.shade300,
+                    onTap: () => issue.toggleSelection(),
+                    child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: WithTextEditingController(
                         getValue: () => issue.title,
@@ -45,7 +55,9 @@ class IssueCard extends StatelessWidget {
                                 .textTheme
                                 .bodyMedium!
                                 .copyWith(color: Colors.grey.shade900)),
-                      )),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ));
