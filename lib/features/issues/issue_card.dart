@@ -31,6 +31,7 @@ class IssueCard extends StatelessWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(8.0),
                     hoverColor: background.shade300,
+                    canRequestFocus: false,
                     onTap: () => issue.toggleSelection(),
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
