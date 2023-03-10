@@ -1,4 +1,6 @@
+import 'package:app/features/canvas/stores/selection_store.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 part 'canvas_object_store.g.dart';
@@ -19,6 +21,8 @@ abstract class _CanvasObjectStore with Store implements CanvasObject {
   // FIXME: Dart thinks the following is not used. But it is.
   _CanvasObjectStore({this.offset = Offset.zero});
 
+  final _selection = GetIt.I.get<Selection>();
+
   @override
   @observable
   Offset offset;
@@ -29,25 +33,25 @@ abstract class _CanvasObjectStore with Store implements CanvasObject {
     this.offset = offset;
   }
 
-  @observable
+  @computed
   @override
-  bool selected = false;
+  bool get selected => _selection.list.contains(this);
 
   @action
   @override
   void select() {
-    selected = true;
+    _selection.select(this);
   }
 
   @action
   @override
   void unselect() {
-    selected = false;
+    _selection.unselect(this);
   }
 
   @action
   @override
   void toggleSelection() {
-    selected = !selected;
+    selected ? unselect() : select();
   }
 }

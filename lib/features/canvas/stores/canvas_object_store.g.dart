@@ -9,6 +9,14 @@ part of 'canvas_object_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CanvasObjectStore on _CanvasObjectStore, Store {
+  Computed<bool>? _$selectedComputed;
+
+  @override
+  bool get selected =>
+      (_$selectedComputed ??= Computed<bool>(() => super.selected,
+              name: '_CanvasObjectStore.selected'))
+          .value;
+
   late final _$offsetAtom =
       Atom(name: '_CanvasObjectStore.offset', context: context);
 
@@ -22,22 +30,6 @@ mixin _$CanvasObjectStore on _CanvasObjectStore, Store {
   set offset(Offset value) {
     _$offsetAtom.reportWrite(value, super.offset, () {
       super.offset = value;
-    });
-  }
-
-  late final _$selectedAtom =
-      Atom(name: '_CanvasObjectStore.selected', context: context);
-
-  @override
-  bool get selected {
-    _$selectedAtom.reportRead();
-    return super.selected;
-  }
-
-  @override
-  set selected(bool value) {
-    _$selectedAtom.reportWrite(value, super.selected, () {
-      super.selected = value;
     });
   }
 
