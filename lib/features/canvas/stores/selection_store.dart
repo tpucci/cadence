@@ -20,6 +20,7 @@ abstract class _SelectionStore with Store implements Selection {
   @override
   @action
   void select(CanvasObject canvasObject) {
+    list.clear();
     list.add(canvasObject);
   }
 

@@ -23,7 +23,7 @@ void main() {
       expect(selection.list, contains(object));
     });
 
-    test('it removes object to selection', () {
+    test('it removes object from selection', () {
       // Arrange
       final object = CanvasObjectStore();
 
@@ -33,6 +33,19 @@ void main() {
 
       // Assert
       expect(selection.list, isEmpty);
+    });
+
+    test('it removes all other objects from selection', () {
+      // Arrange
+      final object1 = CanvasObjectStore();
+      final object2 = CanvasObjectStore();
+
+      // Act
+      selection.select(object1);
+      selection.select(object2);
+
+      // Assert
+      expect(selection.list, isNot(contains(object1)));
     });
   });
 }
