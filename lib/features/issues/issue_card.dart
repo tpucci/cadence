@@ -58,6 +58,8 @@ class _IssueCardState extends State<IssueCard> {
                     onHighlightChanged: (value) {
                       widget.issue.select();
                     },
+                    onTapDown: (_) => widget.issue.startFollowingPointer(),
+                    onTapUp: (_) => widget.issue.stopFollowingPointer(),
                     onTap: () {
                       widget.issue.select();
 

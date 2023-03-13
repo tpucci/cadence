@@ -81,6 +81,28 @@ mixin _$CanvasObjectStore on _CanvasObjectStore, Store {
   }
 
   @override
+  void startFollowingPointer() {
+    final _$actionInfo = _$_CanvasObjectStoreActionController.startAction(
+        name: '_CanvasObjectStore.startFollowingPointer');
+    try {
+      return super.startFollowingPointer();
+    } finally {
+      _$_CanvasObjectStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void stopFollowingPointer() {
+    final _$actionInfo = _$_CanvasObjectStoreActionController.startAction(
+        name: '_CanvasObjectStore.stopFollowingPointer');
+    try {
+      return super.stopFollowingPointer();
+    } finally {
+      _$_CanvasObjectStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 offset: ${offset},
